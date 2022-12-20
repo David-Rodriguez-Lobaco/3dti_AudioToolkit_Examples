@@ -124,112 +124,8 @@ void ofApp::update(){
 void ofApp::draw(){
 
 
-		//Preparing the enviroment
-		ofPushMatrix();																//Saving the current coordinate system			
-		ofNoFill();																	//Function for drawing shapes as outlines
-		ofTranslate(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2, 0);			//Translation to the center of the screen
-		ofRotate(90);																//90º Rotation
-		ofScale(-1, 1, 1);															//Scale of the X axis
-
-		//Obtaining the actual listener information
-		Common::CTransform listenerTransform = listener->GetListenerTransform();	//Obtaining an object of the Transform class
-		Common::CVector3 position = listenerTransform.GetPosition();				//Obtaining an object of the Vector class
-		Common::CQuaternion orientation = listenerTransform.GetOrientation();		//Obtaining an object of the Quaternion class
-
-		//Getting the Quaternion angles
-		float yaw, pitch, roll;														//Initializing the angles
-		orientation.ToYawPitchRoll(yaw, pitch, roll);								//Obtaning the angles of the sources
-		yaw = yaw*180/PI;															//Conversion radians to degrees
-		int radio = 30;																//Initializing a radius for the listener circle
-
-		
-		//Changing the coordinate system to have the center (0,0,0) in the center of the head
-		ofPushMatrix();																//Saving the current coordinate system
-		ofTranslate(position.x, position.y, 0);										//Translation to the head center
-		ofRotate(-yaw);																//Nose rotation
-
-		//Drawing the head, the nose, the eyes and the ears
-		ofSetColor(248, 196, 113);													//Setting the color of the shapes
-		ofDrawCircle(0, 0, radio);													//Drawing the head
-		ofDrawCircle(0, 0, 1);														//Drawing the center of the head
-		ofDrawTriangle(radio, 10, radio+10, 0, radio, -10);							//Drawing the nose
-		ofDrawEllipse(0, radio, 15, 10);											//Drawing the ears
-		ofDrawEllipse(0, -radio, 15, 10);											
-		ofSetColor(0, 0, 0);														//Setting a color of the shapes
-		ofFill();																	//Function for drawing filled shapes 
-		ofDrawEllipse(radio-10, 10, 5, 10);											//Drawing the eyes
-		ofDrawEllipse(radio-10, -10, 5, 10);										
-		
-		ofPopMatrix();																//Restoring the pior coordinate system
-
-		//Obtaining the actual source information
-		Common::CTransform sourceTransform1 = source1DSP->GetSourceTransform();		//Obtaining an object of the Transform class
-		Common::CVector3 source1Position = sourceTransform1.GetPosition();			//Obtaining an object of the Vector class
-		Common::CTransform sourceTransform2 = source2DSP->GetSourceTransform();		//Obtaining an object of the Transform class
-		Common::CVector3 source2Position = sourceTransform2.GetPosition();			//Obtaining an object of the Vector class
-
-		//Drawing the 2 sources with their respective centers
-		ofNoFill();																	//Function for drawing shapes as outlines
-		ofSetColor(20, 62, 249);													//Setting the color of the shapes
-		ofDrawCircle(source1Position.x, source1Position.y, 20);						//Drawing the source 1
-		ofDrawCircle(source1Position.x, source1Position.y, 1);						//Drawing the center of the source 1
-		ofDrawCircle(source2Position.x, source2Position.y, 20);						//Drawing the source 2
-		ofDrawCircle(source2Position.x, source2Position.y, 1);						//Drawing the center of the source 2															
-
-		ofPopMatrix();																//Restoring the pior coordinate system
-
-		//Displaying the University of Malaga logo
-		ofSetColor(255);															//Setting the color of the image
-		image.draw(0, 0, 320,112);													//Displaying the logo								
-	
 }
 
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
-	
-	// matriz.pushMatrix();
-
-	//matriz.drawCircle(0, 0, 0, 45);
-
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-	//Obtaining the actual listener information
-	Common::CTransform listenerTransform = listener->GetListenerTransform();		//Obtaining an object of the Transform class
-	Common::CVector3 position = listenerTransform.GetPosition();					//Obtaining an object of the Vector class
-	Common::CQuaternion orientation = listenerTransform.GetOrientation();			//Obtaining an object of the Vector class
-	
-
-	//Getting the Quaternion angles
-	float yaw, pitch, roll;															//Initializing the angles
-	float angle = PI / 8;															//Initializing the turning angle
-	orientation.ToYawPitchRoll(yaw, pitch, roll);									//Obtaning the angles of the sources
-
-
-	//Conditions for detecting if the user has pressed a key with has an action assigned
-	if (key == OF_KEY_UP) 
-		listenerTransform.SetPosition(Common::CVector3(position.x + 1, position.y, position.z));	//Moving the listener towards up
-		
-	if (key == OF_KEY_DOWN) 
-		listenerTransform.SetPosition(Common::CVector3(position.x - 1, position.y, position.z));	//Moving the listener towards down
-
-	if (key == OF_KEY_RIGHT) 
-		listenerTransform.SetPosition(Common::CVector3(position.x, position.y - 1, position.z));	//Moving the listener towards right
-
-	if (key == OF_KEY_LEFT)
-		listenerTransform.SetPosition(Common::CVector3(position.x, position.y + 1, position.z));	//Moving the listener towards left
-
-	if (key == OF_KEY_F1) 
-		listenerTransform.SetOrientation(Common::CQuaternion(orientation.FromYawPitchRoll(yaw + angle, pitch, roll)));	//Turning left in the Z axis
-
-	if (key == OF_KEY_F2) 
-		listenerTransform.SetOrientation(Common::CQuaternion(orientation.FromYawPitchRoll(yaw - angle, pitch, roll)));	//Turning right in the Z axis
-
-	listener->SetListenerTransform(listenerTransform);												//Setting the listener position and orientation
-}
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
@@ -396,8 +292,8 @@ void ofApp::audioProcess(Common::CEarPair<CMonoBuffer<float>> & bufferOutput, in
 	// Declaration, initialization and filling mono buffers
 	CMonoBuffer<float> source1(uiBufferSize);
 	source1Wav.FillBuffer(source1);
-	CMonoBuffer<float> source2(uiBufferSize);
-	source2Wav.FillBuffer(source2);
+	//CMonoBuffer<float> source2(uiBufferSize);
+	//source2Wav.FillBuffer(source2);
 
 	// Declaration of stereo buffer
 	Common::CEarPair<CMonoBuffer<float>> bufferProcessed;
@@ -408,11 +304,11 @@ void ofApp::audioProcess(Common::CEarPair<CMonoBuffer<float>> & bufferOutput, in
 	bufferOutput.left += bufferProcessed.left;
 	bufferOutput.right += bufferProcessed.right;
 	// Anechoic process of second source
-	source2DSP->SetBuffer(source2);
-	source2DSP->ProcessAnechoic(bufferProcessed.left, bufferProcessed.right);
+	//source2DSP->SetBuffer(source2);
+	//source2DSP->ProcessAnechoic(bufferProcessed.left, bufferProcessed.right);
 	// Adding anechoic processed second source to the output mix
-	bufferOutput.left += bufferProcessed.left;
-	bufferOutput.right += bufferProcessed.right;
+	//bufferOutput.left += bufferProcessed.left;
+	//bufferOutput.right += bufferProcessed.right;
 }
 
 
