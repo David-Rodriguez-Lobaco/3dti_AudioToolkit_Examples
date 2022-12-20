@@ -15,63 +15,103 @@
 
 #include "ofApp.h"
 
-#define SAMPLERATE 44100
+int SAMPLERATE;
 #define BUFFERSIZE 512
+#define OVERS 10  //oversampling
+using std::vector;
+vector<float> ITD = {};
+vector<float> az = {};
+float escala = 0;
+float mayor = 0;
+float P = 0.30; //valor del umbral que se pasa
+int FC = 3000; //valor de la frecuencia de corte del filtro
+
+Common::TAudioStateStruct audioState;	    // Audio State struct declaration
+
+template<typename T>  //Mostrar los elementos del vector
+void printVectorElements(vector<T> &vec)
+{
+	for (auto i = 0; i < vec.size(); ++i) {
+		cout << vec.at(i) << "; ";
+	}
+	cout << endl;
+}
 
 //--------------------------------------------------------------
 void ofApp::setup(){
 	
+	ofSetVerticalSync(true);
+	//Se obtiene la frecuencia del muestreo del archivo que se va a usar
+	SAMPLERATE = HRTF::GetSampleRateFromSofa("H5_44K_16bit_256tap_FIR_SOFA.sofa");
+	//SAMPLERATE = HRTF::GetSampleRateFromSofa("H3_44K_16bit_256tap_FIR_SOFA.sofa");
+	//SAMPLERATE = HRTF::GetSampleRateFromSofa("ARI_NH2_hrtf_M_dtf 256.sofa");
+
+	//Inicialización de las variables de la interfaz
+	refreshButton.addListener(this, &ofApp::refreshButtonPressed);
+	gui.setup(); // most of the time you don't need a name
+	gui.add(azimut.setup("azimut", 0, 0, 359));
+	center.setup("center", { ofGetWidth()*.5, ofGetHeight()*.5 }, { 0, 0 }, { ofGetWidth(), ofGetHeight() });
+	quarter.setup("quarter", { ofGetWidth()*.5, ofGetHeight()*.28 }, { 0, 0 }, { ofGetWidth(), ofGetHeight() });
+	threequarter.setup("threequarter", { ofGetWidth()*.5, ofGetHeight()*.66 }, { 0, 0 }, { ofGetWidth(), ofGetHeight() });
+	//gui.add(color.setup("color", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(color.setup("color", ofColor(0, 0, 0), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(color2.setup("color", ofColor(200, 0, 140), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(screenSize.setup("screen size", ofToString(ofGetWidth()) + "x" + ofToString(ofGetHeight())));
+	gui.add(leyend.setup("UpView", ""));
+	gui.add(Umbral.setup("Umbral", 0.3, 0.1, 0.7));
+	gui.add(FrecCorte.setup("Frecuencia corte KHz", 3, 1, 10));
+	gui.add(refreshButton.setup("Refresh"));
+
 	// Core setup
-	Common::TAudioStateStruct audioState;	    // Audio State struct declaration
 	audioState.bufferSize = BUFFERSIZE;			// Setting buffer size 
 	audioState.sampleRate = SAMPLERATE;			// Setting frame rate 
 	myCore.SetAudioState(audioState);		    // Applying configuration to core
 	myCore.SetHRTFResamplingStep(15);		    // Setting 15-degree resampling step for HRTF
 
+	ERRORHANDLER3DTI.SetVerbosityMode(VERBOSITYMODE_ERRORSANDWARNINGS);
+	ERRORHANDLER3DTI.SetErrorLogStream(&std::cout, true);
 
-	// Listener setup
+
+	// Inicialización del oyente
 	listener = myCore.CreateListener();								 // First step is creating listener
 	Common::CTransform listenerPosition = Common::CTransform();		 // Setting listener in (0,0,0)
-	listenerPosition.SetPosition(Common::CVector3(0, 0, 0));
+	listenerPosition.SetPosition(Common::CVector3(ofGetWidth()*.5, ofGetHeight()*.28, 0));
 	listener->SetListenerTransform(listenerPosition);
 	listener->DisableCustomizedITD();								 // Disabling custom head radius
+
 	// HRTF can be loaded in SOFA (more info in https://sofacoustics.org/) Some examples of HRTF files can be found in 3dti_AudioToolkit/resources/HRTF
 	bool specifiedDelays;
-	bool sofaLoadResult = HRTF::CreateFromSofa("hrtf.sofa", listener, specifiedDelays);			
-	if (!sofaLoadResult) { 
-		cout << "ERROR: Error trying to load the SOFA file" << endl<<endl;
-	}																			
+	//bool sofaLoadResult = HRTF::CreateFromSofa("hrtf.sofa", listener, specifiedDelays);	
+	bool sofaLoadResult = HRTF::CreateFromSofa("H5_44K_16bit_256tap_FIR_SOFA.sofa", listener, specifiedDelays);
+	//bool sofaLoadResult = HRTF::CreateFromSofa("H3_44K_16bit_256tap_FIR_SOFA.sofa", listener, specifiedDelays);
+	//bool sofaLoadResult = HRTF::CreateFromSofa("H3_48K_24bit_256tap_FIR_SOFA_0_151.sofa", listener, specifiedDelays); 
+	//bool sofaLoadResult = HRTF::CreateFromSofa("D1_96K_24bit_512tap_FIR_SOFA.sofa", listener, specifiedDelays);
+	//bool sofaLoadResult = HRTF::CreateFromSofa("ARI_NH2_hrtf_M_dtf 256.sofa", listener, specifiedDelays);
 
-	// Source 1 setup
+	if (!sofaLoadResult) {
+		cout << "ERROR: Error trying to load the SOFA file" << endl << endl;
+	}
+
+	// Iicializacion de la fuente sonora
 	source1DSP = myCore.CreateSingleSourceDSP();									// Creating audio source
 	LoadWavFile(source1Wav, "speech_female.wav");											// Loading .wav file										   
 	Common::CTransform source1Position = Common::CTransform();
-	source1Position.SetPosition(Common::CVector3(0, 100, 0));							//Set source position on the listener left side				 
+	source1Position.SetPosition(Common::CVector3(ofGetWidth()*.5, ofGetHeight()*.28, 0));							//Set source position on the listener left side				 
 	source1DSP->SetSourceTransform(source1Position);
 	source1DSP->SetSpatializationMode(Binaural::TSpatializationMode::HighQuality);	// Choosing high quality mode for anechoic processing
 	source1DSP->DisableNearFieldEffect();											// Audio source will not be close to listener, so we don't need near field effect
 	source1DSP->EnableAnechoicProcess();											// Enable anechoic processing for this source
-	source1DSP->EnableDistanceAttenuationAnechoic();								// Do not perform distance simulation
+	source1DSP->DisableDistanceAttenuationAnechoic();								// Do not perform distance simulation
 
-	// Source 2 setup
-	source2DSP = myCore.CreateSingleSourceDSP();									// Creating audio source
-	LoadWavFile(source2Wav, "speech_male.wav");											// Loading .wav file										  
-	Common::CTransform source2Position = Common::CTransform();
-	source2Position.SetPosition(Common::CVector3(0, -100, 0));						//Set source position on the listener right side
-	source2DSP->SetSourceTransform(source2Position);
-	source2DSP->SetSpatializationMode(Binaural::TSpatializationMode::HighQuality);	// Choosing high quality mode for anechoic processing
-	source2DSP->DisableNearFieldEffect();											// Audio source will not be close to listener, so we don't need near field effect
-	source2DSP->EnableAnechoicProcess();											// Enable anechoic processing for this source
-	source2DSP->EnableDistanceAttenuationAnechoic();								// Do not perform distance simulation
+	T_HRTFTable hrtf_table = listener->GetHRTF()->GetRawHRTFTable();
 
+	myCore.SetAudioState(audioState);
+	LoadITDGraphic(hrtf_table);
 	//AudioDevice Setup
-	//// Before getting the devices list for the second time, the strean must be closed. Otherwise,
-	//// the app crashes when systemSoundStream.start(); or stop() are called.
+	// Before getting the devices list for the second time, the strean must be closed. Otherwise,
+	// the app crashes when systemSoundStream.start(); or stop() are called.
 	systemSoundStream.close();
 	SetDeviceAndAudio(audioState);
-
-	//Logo Setup
-	image.load("umaimage.png");														//Loading the image into the object
 
 }
 
