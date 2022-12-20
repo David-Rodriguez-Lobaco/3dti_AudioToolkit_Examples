@@ -29,9 +29,7 @@ class ofApp : public ofBaseApp{
 		void update();
 		void draw();
 
-		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
+		void mouseMoved(int x, int y);
 		void mouseDragged(int x, int y, int button);
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
@@ -40,25 +38,48 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+		void refreshButtonPressed();
+		void exit();
 
-	ofImage image;										//Creating a ofImage variable for loading the imagen into the project
-		
-	private:	
+		ofxIntSlider azimut;
+		ofxIntSlider elevation;
+		ofxColorSlider color;
+		ofxColorSlider color2;
+		ofxVec2Slider center;
+		ofxVec2Slider quarter;
+		ofxVec2Slider threequarter;
+		ofxIntSlider circleResolution;
+		ofxToggle filled;
+		ofxFloatSlider Umbral;
+		ofxIntSlider FrecCorte;
+		ofxButton refreshButton;
+		ofxLabel screenSize;
+		ofxLabel leyend;
 
-		Binaural::CCore							myCore;												 // Core interface
-		shared_ptr<Binaural::CListener>			listener;											 // Pointer to listener interface
 
-		std::vector<ofSoundDevice> deviceList;
-		ofSoundStream systemSoundStream;
+		ofxPanel gui;
 
-		SoundSource source1Wav;
-		SoundSource source2Wav;
-		shared_ptr<Binaural::CSingleSourceDSP>	source1DSP;							 // Pointers to each audio source interface
-		shared_ptr<Binaural::CSingleSourceDSP>	source2DSP;							 // Pointers to each audio source interface
+		ofImage image;										//Creating a ofImage variable for loading the imagen into the project
 
-		int GetAudioDeviceIndex(std::vector<ofSoundDevice> list);
-		void SetDeviceAndAudio(Common::TAudioStateStruct audioState);
-		void audioOut(float * output, int bufferSize, int nChannels);
-		void audioProcess(Common::CEarPair<CMonoBuffer<float>> & bufferOutput, int uiBufferSize);
-		void LoadWavFile(SoundSource & source, const char* filePath);
+private:
+
+	Binaural::CCore							myCore;												 // Core interface
+	shared_ptr<Binaural::CListener>			listener;											 // Pointer to listener interface
+	shared_ptr<Binaural::CListener>			source1Position;											 // Pointer to listener interface
+
+	std::vector<ofSoundDevice> deviceList;
+	ofSoundStream systemSoundStream;
+
+	SoundSource source1Wav;
+	//SoundSource source2Wav;
+	shared_ptr<Binaural::CSingleSourceDSP>	source1DSP;							 // Pointers to each audio source interface
+	//shared_ptr<Binaural::CSingleSourceDSP>	source2DSP;							 // Pointers to each audio source interface
+
+
+	int GetAudioDeviceIndex(std::vector<ofSoundDevice> list);
+	void SetDeviceAndAudio(Common::TAudioStateStruct audioState);
+	void audioOut(float * output, int bufferSize, int nChannels);
+	void audioProcess(Common::CEarPair<CMonoBuffer<float>> & bufferOutput, int uiBufferSize);
+	void LoadWavFile(SoundSource & source, const char* filePath);
+	void LoadITDGraphic(T_HRTFTable hrtf_table);
 };
