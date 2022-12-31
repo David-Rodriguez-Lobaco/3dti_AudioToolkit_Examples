@@ -122,7 +122,10 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+	//Preparing the background
+	//ofBackground(ofColor::black);
+	ofBackground(ofColor::gray);
+	//ofBackgroundGradient(ofColor::white, ofColor::gray);
 
 }
 
