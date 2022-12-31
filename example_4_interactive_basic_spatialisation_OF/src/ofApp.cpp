@@ -14,6 +14,7 @@
 */
 
 #include "ofApp.h"
+#include <vector>
 
 int SAMPLERATE;
 #define BUFFERSIZE 512
@@ -422,3 +423,48 @@ void ofApp::LoadWavFile(SoundSource & source, const char* filePath)
 	}
 }
 
+void ofApp::LoadITDGraphic(T_HRTFTable hrtf_table)
+{
+	THRIRStruct hrir;
+
+	cout << "HRTF Table size: " << hrtf_table.size() << endl;
+
+	int longi = 0;
+	float TL = 0;
+	float TR = 0;
+	ITD.resize(0);
+	az.resize(0);
+
+	for (int i = 0; i < 360; i++)  //Calcula los ITD de la horizontal
+	{
+		float aux;
+		auto hrir0 = hrtf_table.find(orientation(i, 0));
+		if (hrir0 != hrtf_table.end())
+		{
+			hrir = hrir0->second;
+
+			TL = (float)hrir.leftDelay / (float)(OVERS*SAMPLERATE);
+			TR = (float)hrir.rightDelay / (float)(OVERS*SAMPLERATE);
+
+			aux = TL - TR;
+			cout << aux << endl;
+			ITD.resize(ITD.size() + 1);
+			az.resize(az.size() + 1);
+			ITD[longi] = aux;
+			az[longi] = i;
+			longi++;
+		}
+	}
+
+	cout << "size: " << ITD.size() << endl;
+	escala = 0;
+	mayor = 0;
+	for (int i = 0; i < ITD.size(); i++)
+	{
+		if (abs(ITD[i]) > abs(mayor))
+		{
+			mayor = ITD[i];
+		}
+	}
+	escala = abs(100 / mayor);
+}
