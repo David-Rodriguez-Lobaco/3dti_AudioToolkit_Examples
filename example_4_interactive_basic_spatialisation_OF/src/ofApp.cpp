@@ -127,6 +127,10 @@ void ofApp::draw(){
 	ofBackground(ofColor::gray);
 	//ofBackgroundGradient(ofColor::white, ofColor::gray);
 
+	//Preparing the enviroment
+	ofPushMatrix();																//Saving the current coordinate system			
+	ofNoFill();																	//Function for drawing shapes as outlines															//90º Rotation
+	ofScale(1, 1, 1);
 }
 
 
