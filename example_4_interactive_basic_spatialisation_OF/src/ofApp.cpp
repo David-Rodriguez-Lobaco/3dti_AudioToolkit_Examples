@@ -117,7 +117,17 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+	////Obtaining the actual source information
+	Common::CTransform listenerTransform = listener->GetListenerTransform();		//Obtaining an object of the Transform class
+	Common::CVector3 position = listenerTransform.GetPosition();					//Obtaining an object of the Vector class
+	Common::CQuaternion orientation = listenerTransform.GetOrientation();			//Obtaining an object of the Vector class
 
+	Common::CTransform sourceTransform1 = source1DSP->GetSourceTransform();		//Obtaining an object of the Transform class
+	Common::CVector3 source1Position = sourceTransform1.GetPosition();			//Obtaining an object of the Vector class
+
+	//Move the object to the new coordinate 
+	sourceTransform1.SetPosition(Common::CVector3(position.x + 1.5 * cos(azimut*PI / 180), position.y - 1.5 * -sin(azimut*PI / 180), position.z));
+	source1DSP->SetSourceTransform(sourceTransform1);
 }
 
 //--------------------------------------------------------------
@@ -131,6 +141,73 @@ void ofApp::draw(){
 	ofPushMatrix();																//Saving the current coordinate system			
 	ofNoFill();																	//Function for drawing shapes as outlines															//90º Rotation
 	ofScale(1, 1, 1);
+
+	//Obtaining the actual listener information
+	Common::CTransform listenerTransform = listener->GetListenerTransform();	//Obtaining an object of the Transform class
+	Common::CVector3 position = listenerTransform.GetPosition();				//Obtaining an object of the Vector class
+	Common::CQuaternion orientation = listenerTransform.GetOrientation();		//Obtaining an object of the Quaternion class
+
+	//Getting the Quaternion angles
+	float yaw, pitch, roll;														//Initializing the angles
+	orientation.ToYawPitchRoll(yaw, pitch, roll);								//Obtaning the angles of the sources
+	yaw = yaw * 180 / PI;															//Conversion radians to degrees
+	int radio = 25;																//Initializing a radius for the listener circle
+
+
+	//Changing the coordinate system to have the center (0,0,0) in the center of the head
+	ofPushMatrix();																//Saving the current coordinate system
+	ofTranslate(position.x, position.y, 0);										//Translation to the head center
+
+	ofPopMatrix();																//Restoring the pior coordinate system
+
+	////Obtaining the actual source information
+	Common::CTransform sourceTransform1 = source1DSP->GetSourceTransform();		//Obtaining an object of the Transform class
+	Common::CVector3 source1Position = sourceTransform1.GetPosition();			//Obtaining an object of the Vector class
+
+
+	ofSetCircleResolution(10000);
+	ofSetColor(color2);
+	ofFill();//Setting the color of the shapes
+
+	ofDrawCircle(position.x + 100 * -sin(azimut*PI / 180), position.y - 100 * cos(azimut*PI / 180), 8);						//Drawing the source 1
+
+
+	ofSetColor(color);
+
+	ofFill();
+	ofSetCircleResolution(3);
+	ofDrawTriangle(quarter->x, quarter->y - 35, quarter->x - 20, quarter->y, quarter->x + 20, quarter->y);
+
+
+	ofSetCircleResolution(10000);
+	ofDrawCircle(quarter, 25); //cabeza
+	ofDrawCircle(quarter->x + 23, quarter->y, 8); //orejas
+	ofDrawCircle(quarter->x - 23, quarter->y, 8);
+	ofNoFill();
+	ofDrawCircle(quarter, 100);
+
+
+	ofSetColor(color2);
+
+	ofFill();
+
+	ofSetColor(175, 255, 0);
+	ofDrawLine(threequarter->x - 180, threequarter->y - 100, threequarter->x - 180, threequarter->y + 100); //barra vertival
+	ofDrawLine(threequarter->x - 181, threequarter->y - 100, threequarter->x - 181, threequarter->y + 100);
+	ofDrawLine(threequarter->x - 182, threequarter->y - 100, threequarter->x - 182, threequarter->y + 100);
+	ofDrawLine(threequarter->x - 180, threequarter->y, threequarter->x + 180, threequarter->y);			  //barra horizontal
+
+	ofSetColor(color2);
+	//Point moveTo(threequarter->x+az[0], threequarter->y+ITD[0]);
+	for (int g = 1; g < ITD.size(); g++)
+	{
+		ofDrawLine(threequarter->x + az[g - 1] - 180, threequarter->y - ITD[g - 1] * escala, threequarter->x + az[g] - 180, threequarter->y - ITD[g] * escala);
+	}
+
+	ofSetColor(0, 0, 200);
+	ofDrawLine(threequarter->x - 180 + azimut, threequarter->y - 100, threequarter->x - 180 + azimut, threequarter->y + 100);
+
+	gui.draw();
 }
 
 
