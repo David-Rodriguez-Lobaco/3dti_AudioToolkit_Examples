@@ -402,8 +402,6 @@ void ofApp::audioProcess(Common::CEarPair<CMonoBuffer<float>> & bufferOutput, in
 	// Declaration, initialization and filling mono buffers
 	CMonoBuffer<float> source1(uiBufferSize);
 	source1Wav.FillBuffer(source1);
-	//CMonoBuffer<float> source2(uiBufferSize);
-	//source2Wav.FillBuffer(source2);
 
 	// Declaration of stereo buffer
 	Common::CEarPair<CMonoBuffer<float>> bufferProcessed;
@@ -413,12 +411,6 @@ void ofApp::audioProcess(Common::CEarPair<CMonoBuffer<float>> & bufferOutput, in
 	// Adding anechoic processed first source to the output mix
 	bufferOutput.left += bufferProcessed.left;
 	bufferOutput.right += bufferProcessed.right;
-	// Anechoic process of second source
-	//source2DSP->SetBuffer(source2);
-	//source2DSP->ProcessAnechoic(bufferProcessed.left, bufferProcessed.right);
-	// Adding anechoic processed second source to the output mix
-	//bufferOutput.left += bufferProcessed.left;
-	//bufferOutput.right += bufferProcessed.right;
 }
 
 
