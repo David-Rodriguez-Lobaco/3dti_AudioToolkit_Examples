@@ -121,7 +121,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>..\3dti_AudioToolkit\3dti_Toolkit;..\3dti_AudioToolkit\3dti_ResourceManager;..\3dti_AudioToolkit\3dti_ResourceManager\third_party_libraries\cereal\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\3dti_AudioToolkit\3dti_Toolkit;..\3dti_AudioToolkit\3dti_ResourceManager;..\3dti_AudioToolkit\3dti_ResourceManager\third_party_libraries\cereal\include;..\..\addons\ofxVectorGraphics\src;..\..\addons\ofxVectorGraphics\libs;..\..\addons\ofxGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
@@ -164,7 +164,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>..\3dti_AudioToolkit\3dti_Toolkit;..\3dti_AudioToolkit\3dti_ResourceManager;..\3dti_AudioToolkit\3dti_ResourceManager\third_party_libraries\cereal\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\3dti_AudioToolkit\3dti_Toolkit;..\3dti_AudioToolkit\3dti_ResourceManager;..\3dti_AudioToolkit\3dti_ResourceManager\third_party_libraries\cereal\include;..\..\addons\ofxVectorGraphics\src;..\..\addons\ofxVectorGraphics\libs;..\..\addons\ofxGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
     </ClCompile>
@@ -181,13 +181,41 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="obj\addons\ofxGui\src\ofxBaseGui.cpp" />
+    <ClCompile Include="obj\addons\ofxGui\src\ofxButton.cpp" />
+    <ClCompile Include="obj\addons\ofxGui\src\ofxColorPicker.cpp" />
+    <ClCompile Include="obj\addons\ofxGui\src\ofxGuiGroup.cpp" />
+    <ClCompile Include="obj\addons\ofxGui\src\ofxInputField.cpp" />
+    <ClCompile Include="obj\addons\ofxGui\src\ofxLabel.cpp" />
+    <ClCompile Include="obj\addons\ofxGui\src\ofxPanel.cpp" />
+    <ClCompile Include="obj\addons\ofxGui\src\ofxSlider.cpp" />
+    <ClCompile Include="obj\addons\ofxGui\src\ofxSliderGroup.cpp" />
+    <ClCompile Include="obj\addons\ofxGui\src\ofxToggle.cpp" />
     <ClCompile Include="obj\addons\ofxVectorGraphics\libs\CreEPS.cpp" />
     <ClCompile Include="obj\addons\ofxVectorGraphics\src\ofxVectorGraphics.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\ofApp.cpp" />
+    <ClCompile Include="src\main.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\addons\ofxVectorGraphics\libs;..\..\addons\ofxVectorGraphics\src;..\..\addons\ofxGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\addons\ofxVectorGraphics\libs;..\..\addons\ofxVectorGraphics\src;..\..\addons\ofxGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="src\ofApp.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\addons\ofxGui\src;..\..\addons\ofxVectorGraphics\src;..\..\addons\ofxVectorGraphics\libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\addons\ofxVectorGraphics\libs;..\..\addons\ofxVectorGraphics\src;..\..\addons\ofxGui\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="src\SoundSourcer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="obj\addons\ofxGui\src\ofxBaseGui.h" />
+    <ClInclude Include="obj\addons\ofxGui\src\ofxButton.h" />
+    <ClInclude Include="obj\addons\ofxGui\src\ofxColorPicker.h" />
+    <ClInclude Include="obj\addons\ofxGui\src\ofxGui.h" />
+    <ClInclude Include="obj\addons\ofxGui\src\ofxGuiGroup.h" />
+    <ClInclude Include="obj\addons\ofxGui\src\ofxGuiUtils.h" />
+    <ClInclude Include="obj\addons\ofxGui\src\ofxInputField.h" />
+    <ClInclude Include="obj\addons\ofxGui\src\ofxLabel.h" />
+    <ClInclude Include="obj\addons\ofxGui\src\ofxPanel.h" />
+    <ClInclude Include="obj\addons\ofxGui\src\ofxSlider.h" />
+    <ClInclude Include="obj\addons\ofxGui\src\ofxSliderGroup.h" />
+    <ClInclude Include="obj\addons\ofxGui\src\ofxToggle.h" />
     <ClInclude Include="obj\addons\ofxVectorGraphics\libs\CreEPS.hpp" />
     <ClInclude Include="obj\addons\ofxVectorGraphics\libs\CreEPS_Types.hpp" />
     <ClInclude Include="obj\addons\ofxVectorGraphics\src\ofxVectorGraphics.h" />
@@ -205,18 +233,6 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(OF_ROOT)\libs\openFrameworksCompiled\project\vs</AdditionalIncludeDirectories>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="obj\addons\ofxGui\src\ofxBaseGui.obj" />
-    <Object Include="obj\addons\ofxGui\src\ofxButton.obj" />
-    <Object Include="obj\addons\ofxGui\src\ofxColorPicker.obj" />
-    <Object Include="obj\addons\ofxGui\src\ofxGuiGroup.obj" />
-    <Object Include="obj\addons\ofxGui\src\ofxInputField.obj" />
-    <Object Include="obj\addons\ofxGui\src\ofxLabel.obj" />
-    <Object Include="obj\addons\ofxGui\src\ofxPanel.obj" />
-    <Object Include="obj\addons\ofxGui\src\ofxSlider.obj" />
-    <Object Include="obj\addons\ofxGui\src\ofxSliderGroup.obj" />
-    <Object Include="obj\addons\ofxGui\src\ofxToggle.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ProjectExtensions>

@@ -16,6 +16,36 @@
     <ClCompile Include="obj\addons\ofxVectorGraphics\src\ofxVectorGraphics.cpp">
       <Filter>addons\ofxVectorGraphics\src</Filter>
     </ClCompile>
+    <ClCompile Include="obj\addons\ofxGui\src\ofxBaseGui.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\addons\ofxGui\src\ofxButton.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\addons\ofxGui\src\ofxColorPicker.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\addons\ofxGui\src\ofxGuiGroup.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\addons\ofxGui\src\ofxInputField.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\addons\ofxGui\src\ofxLabel.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\addons\ofxGui\src\ofxPanel.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\addons\ofxGui\src\ofxSlider.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\addons\ofxGui\src\ofxSliderGroup.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\addons\ofxGui\src\ofxToggle.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -56,40 +86,44 @@
     <ClInclude Include="obj\addons\ofxVectorGraphics\src\ofxVectorGraphics.h">
       <Filter>addons\ofxVectorGraphics\src</Filter>
     </ClInclude>
+    <ClInclude Include="obj\addons\ofxGui\src\ofxBaseGui.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\addons\ofxGui\src\ofxButton.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\addons\ofxGui\src\ofxColorPicker.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\addons\ofxGui\src\ofxGui.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\addons\ofxGui\src\ofxGuiGroup.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\addons\ofxGui\src\ofxGuiUtils.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\addons\ofxGui\src\ofxInputField.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\addons\ofxGui\src\ofxLabel.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\addons\ofxGui\src\ofxPanel.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\addons\ofxGui\src\ofxSlider.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\addons\ofxGui\src\ofxSliderGroup.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\addons\ofxGui\src\ofxToggle.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="obj\addons\ofxGui\src\ofxBaseGui.obj">
-      <Filter>addons\ofxGui\src</Filter>
-    </Object>
-    <Object Include="obj\addons\ofxGui\src\ofxButton.obj">
-      <Filter>addons\ofxGui\src</Filter>
-    </Object>
-    <Object Include="obj\addons\ofxGui\src\ofxColorPicker.obj">
-      <Filter>addons\ofxGui\src</Filter>
-    </Object>
-    <Object Include="obj\addons\ofxGui\src\ofxGuiGroup.obj">
-      <Filter>addons\ofxGui\src</Filter>
-    </Object>
-    <Object Include="obj\addons\ofxGui\src\ofxInputField.obj">
-      <Filter>addons\ofxGui\src</Filter>
-    </Object>
-    <Object Include="obj\addons\ofxGui\src\ofxLabel.obj">
-      <Filter>addons\ofxGui\src</Filter>
-    </Object>
-    <Object Include="obj\addons\ofxGui\src\ofxPanel.obj">
-      <Filter>addons\ofxGui\src</Filter>
-    </Object>
-    <Object Include="obj\addons\ofxGui\src\ofxSlider.obj">
-      <Filter>addons\ofxGui\src</Filter>
-    </Object>
-    <Object Include="obj\addons\ofxGui\src\ofxSliderGroup.obj">
-      <Filter>addons\ofxGui\src</Filter>
-    </Object>
-    <Object Include="obj\addons\ofxGui\src\ofxToggle.obj">
-      <Filter>addons\ofxGui\src</Filter>
-    </Object>
   </ItemGroup>
 </Project>
