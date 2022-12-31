@@ -181,11 +181,16 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="obj\addons\ofxVectorGraphics\libs\CreEPS.cpp" />
+    <ClCompile Include="obj\addons\ofxVectorGraphics\src\ofxVectorGraphics.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\SoundSourcer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="obj\addons\ofxVectorGraphics\libs\CreEPS.hpp" />
+    <ClInclude Include="obj\addons\ofxVectorGraphics\libs\CreEPS_Types.hpp" />
+    <ClInclude Include="obj\addons\ofxVectorGraphics\src\ofxVectorGraphics.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\SoundSource.h" />
   </ItemGroup>
@@ -200,6 +205,18 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(OF_ROOT)\libs\openFrameworksCompiled\project\vs</AdditionalIncludeDirectories>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="obj\addons\ofxGui\src\ofxBaseGui.obj" />
+    <Object Include="obj\addons\ofxGui\src\ofxButton.obj" />
+    <Object Include="obj\addons\ofxGui\src\ofxColorPicker.obj" />
+    <Object Include="obj\addons\ofxGui\src\ofxGuiGroup.obj" />
+    <Object Include="obj\addons\ofxGui\src\ofxInputField.obj" />
+    <Object Include="obj\addons\ofxGui\src\ofxLabel.obj" />
+    <Object Include="obj\addons\ofxGui\src\ofxPanel.obj" />
+    <Object Include="obj\addons\ofxGui\src\ofxSlider.obj" />
+    <Object Include="obj\addons\ofxGui\src\ofxSliderGroup.obj" />
+    <Object Include="obj\addons\ofxGui\src\ofxToggle.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ProjectExtensions>

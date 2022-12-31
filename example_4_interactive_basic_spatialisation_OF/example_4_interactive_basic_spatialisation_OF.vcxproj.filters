@@ -10,10 +10,34 @@
     <ClCompile Include="src\SoundSourcer.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="obj\addons\ofxVectorGraphics\libs\CreEPS.cpp">
+      <Filter>addons\ofxVectorGraphics\libs</Filter>
+    </ClCompile>
+    <ClCompile Include="obj\addons\ofxVectorGraphics\src\ofxVectorGraphics.cpp">
+      <Filter>addons\ofxVectorGraphics\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
       <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons">
+      <UniqueIdentifier>{3170b365-ec7c-49da-9542-bec8129a7f84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxVectorGraphics">
+      <UniqueIdentifier>{63e17d32-ee97-4c12-a882-6a2af5083514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxVectorGraphics\libs">
+      <UniqueIdentifier>{d2cb1e42-854b-457f-aa94-fc332ee64381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxVectorGraphics\src">
+      <UniqueIdentifier>{1797b2a5-7100-4d9d-91c4-bb83e71bb380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxGui">
+      <UniqueIdentifier>{a494456d-24ee-4010-aa4a-59cefa4df008}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxGui\src">
+      <UniqueIdentifier>{68fc102e-3897-4126-9028-cd44d8294352}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -23,8 +47,49 @@
     <ClInclude Include="src\SoundSource.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="obj\addons\ofxVectorGraphics\libs\CreEPS.hpp">
+      <Filter>addons\ofxVectorGraphics\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\addons\ofxVectorGraphics\libs\CreEPS_Types.hpp">
+      <Filter>addons\ofxVectorGraphics\libs</Filter>
+    </ClInclude>
+    <ClInclude Include="obj\addons\ofxVectorGraphics\src\ofxVectorGraphics.h">
+      <Filter>addons\ofxVectorGraphics\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="obj\addons\ofxGui\src\ofxBaseGui.obj">
+      <Filter>addons\ofxGui\src</Filter>
+    </Object>
+    <Object Include="obj\addons\ofxGui\src\ofxButton.obj">
+      <Filter>addons\ofxGui\src</Filter>
+    </Object>
+    <Object Include="obj\addons\ofxGui\src\ofxColorPicker.obj">
+      <Filter>addons\ofxGui\src</Filter>
+    </Object>
+    <Object Include="obj\addons\ofxGui\src\ofxGuiGroup.obj">
+      <Filter>addons\ofxGui\src</Filter>
+    </Object>
+    <Object Include="obj\addons\ofxGui\src\ofxInputField.obj">
+      <Filter>addons\ofxGui\src</Filter>
+    </Object>
+    <Object Include="obj\addons\ofxGui\src\ofxLabel.obj">
+      <Filter>addons\ofxGui\src</Filter>
+    </Object>
+    <Object Include="obj\addons\ofxGui\src\ofxPanel.obj">
+      <Filter>addons\ofxGui\src</Filter>
+    </Object>
+    <Object Include="obj\addons\ofxGui\src\ofxSlider.obj">
+      <Filter>addons\ofxGui\src</Filter>
+    </Object>
+    <Object Include="obj\addons\ofxGui\src\ofxSliderGroup.obj">
+      <Filter>addons\ofxGui\src</Filter>
+    </Object>
+    <Object Include="obj\addons\ofxGui\src\ofxToggle.obj">
+      <Filter>addons\ofxGui\src</Filter>
+    </Object>
   </ItemGroup>
 </Project>
