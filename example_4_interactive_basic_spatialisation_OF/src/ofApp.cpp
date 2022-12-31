@@ -256,6 +256,32 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
 
+//--------------------------------------------------------------
+void ofApp::refreshButtonPressed()
+{
+	systemSoundStream.stop();
+	P = Umbral;
+	FC = FrecCorte * 1000;
+	bool specifiedDelays;
+	bool sofaLoadResult = HRTF::CreateFromSofa("H5_44K_16bit_256tap_FIR_SOFA.sofa", listener, specifiedDelays);
+	//bool sofaLoadResult = HRTF::CreateFromSofa("H3_44K_16bit_256tap_FIR_SOFA.sofa", listener, specifiedDelays);
+	//bool sofaLoadResult = HRTF::CreateFromSofa("H3_inverso.sofa", listener, specifiedDelays);
+	//bool sofaLoadResult = HRTF::CreateFromSofa("D1_96K_24bit_512tap_FIR_SOFA.sofa", listener, specifiedDelays);
+	//bool sofaLoadResult = HRTF::CreateFromSofa("ARI_NH2_hrtf_M_dtf 256.sofa", listener, specifiedDelays);
+	if (!sofaLoadResult) {
+		cout << "ERROR: Error trying to load the SOFA file" << endl << endl;
+	}
+
+	T_HRTFTable hrtf_table = listener->GetHRTF()->GetRawHRTFTable();
+
+
+	source1DSP->ResetSourceBuffers();
+	myCore.SetAudioState(audioState);
+
+	LoadITDGraphic(hrtf_table);
+	systemSoundStream.start();
+}
+
 /// Read de audio the list of devices of the user computer, allowing the user to select which device to use. Configure the Audio using openFramework
 void ofApp::SetDeviceAndAudio(Common::TAudioStateStruct audioState) {
 	// This call could block the app when the motu audio interface is unplugged
