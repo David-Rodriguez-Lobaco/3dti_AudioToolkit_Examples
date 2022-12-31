@@ -113,7 +113,6 @@ void ofApp::setup(){
 	// the app crashes when systemSoundStream.start(); or stop() are called.
 	systemSoundStream.close();
 	SetDeviceAndAudio(audioState);
-
 }
 
 //--------------------------------------------------------------
@@ -165,7 +164,6 @@ void ofApp::draw(){
 	Common::CTransform sourceTransform1 = source1DSP->GetSourceTransform();		//Obtaining an object of the Transform class
 	Common::CVector3 source1Position = sourceTransform1.GetPosition();			//Obtaining an object of the Vector class
 
-
 	ofSetCircleResolution(10000);
 	ofSetColor(color2);
 	ofFill();//Setting the color of the shapes
@@ -211,6 +209,9 @@ void ofApp::draw(){
 	gui.draw();
 }
 
+void ofApp::exit() {
+	refreshButton.removeListener(this, &ofApp::refreshButtonPressed);
+}
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
